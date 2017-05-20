@@ -1,8 +1,9 @@
 
 package business.externalinterfaces;
 
+import java.io.Serializable;
 
-public interface CustomerProfile {
+public interface CustomerProfile extends Serializable{
     public String getFirstName();
     public String getLastName();
     public Integer getCustId();

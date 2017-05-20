@@ -9,21 +9,24 @@ public class AddressImpl implements Address {
 	private String zip;
 	private boolean isShippingAddress = false;
 	private boolean isBillingAddress = false;
-	
-	public AddressImpl(String str, String c, String state, String zip, 
-			boolean isShip, boolean isBill) {
-		street=str;
-		city=c;
-		this.state=state;
-		this.zip=zip;
+	private int id;
+
+	public AddressImpl(String str, String c, String state, String zip, boolean isShip, boolean isBill) {
+		street = str;
+		city = c;
+		this.state = state;
+		this.zip = zip;
 		isShippingAddress = isShip;
 		isBillingAddress = isBill;
 	}
-	public AddressImpl() {}
+
+	public AddressImpl() {
+	}
+
 	public boolean isShippingAddress() {
 		return isShippingAddress;
 	}
-	
+
 	public boolean isBillingAddress() {
 		return isBillingAddress;
 	}
@@ -59,5 +62,13 @@ public class AddressImpl implements Address {
 	public void setZip(String zip) {
 		this.zip = zip;
 	}
-	
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 }

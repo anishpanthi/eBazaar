@@ -8,6 +8,23 @@ public class AddressPres {
 	public Address getAddress() {
 		return address;
 	}
+	
+	public String getStreet(){
+		return address.getStreet();
+	}
+	
+	public String getState(){
+		return address.getState();
+	}
+	
+	public String getCity(){
+		return address.getCity();
+	}
+	
+	public String getZip(){
+		return address.getZip();
+	}
+	
 	public void setAddress(Address address) {
 		this.address = address;
 	}

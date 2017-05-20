@@ -1,5 +1,6 @@
 package presentation.data;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -19,17 +20,26 @@ import presentation.gui.GuiConstants;
 import presentation.util.Util;
 
 @Component
-public class BrowseSelectData {
+public class BrowseSelectData implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1369351064981081620L;
 	//INSTANCE;
-	
 	@Autowired
 	BrowseAndSelectController browseAndSelectController;
-	
 	private static final Logger LOG = Logger.getLogger(BrowseSelectData.class.getName());
 	// Fields that are maintained as user interacts with UI
 	private CatalogPres selectedCatalog;
 	private ProductPres selectedProduct;
 	private CartItemPres selectedCartItem;
+
+	public List<CartItemPres> retrieveSavedcart() throws BackendException {
+		browseAndSelectController.retrieveSavedCart();
+		this.updateCartData();
+		List<CartItemPres> cartItems = this.getCartData2();
+		return cartItems;
+	}
 
 	public CatalogPres getSelectedCatalog() {
 		return selectedCatalog;
@@ -71,9 +81,16 @@ public class BrowseSelectData {
 	public List<CartItemPres> getCartData2() {
 		return cartData2;
 	}
-	
+
 	public void clearCart() {
 		cartData2 = new ArrayList<>();
+	}
+
+	public List<CartItemPres> deleteAndUpdateCart(String itemTODelete) {
+		cartData2 = cartData2.stream()
+				.filter(pres -> !(pres.getItemName()).matches(itemTODelete))
+				.collect(Collectors.toList());
+		return cartData2;
 	}
 
 	public CartItemPres cartItemPresFromData(String name, double unitPrice, int quantAvail) {
@@ -146,15 +163,9 @@ public class BrowseSelectData {
 		List<CartItem> newlist = browseAndSelectController.getCartItems();
 		if (newlist != null)
 			cartItems = newlist;
-		cartData = FXCollections.observableList(Util.cartItemsToCartItemPres(cartItems));
-		LOG.warning("Method updateCartData in BrowseSelectData has not been fully implemented");
+		cartData2 = FXCollections.observableList(Util.cartItemsToCartItemPres(cartItems));
+		// LOG.warning("Method updateCartData in BrowseSelectData has not been fully implemented");
 		// BrowseSelectUIControl.INSTANCE.updateCartItems(cartData);
-	}
-
-	public List<CartItemPres> deleteAndUpdateCart(String itemTODelete) {
-		cartData2 = cartData2.stream().filter(pres -> !(pres.getItemName()).matches(itemTODelete))
-				.collect(Collectors.toList());
-		return cartData2;
 	}
 
 	// CatalogList data

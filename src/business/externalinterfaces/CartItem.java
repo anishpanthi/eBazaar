@@ -1,6 +1,8 @@
 package business.externalinterfaces;
 
-public interface CartItem {
+import java.io.Serializable;
+
+public interface CartItem extends Serializable{
 	public boolean isAlreadySaved();
 	public Integer getCartid();
 	public Integer getLineitemid();

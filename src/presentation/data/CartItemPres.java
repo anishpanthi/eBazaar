@@ -1,9 +1,14 @@
 package presentation.data;
 
+import java.io.Serializable;
 
+public class CartItemPres implements Serializable{
 
-public class CartItemPres {
-
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8914014237294493367L;
+	
 	private CartItemData cartItem;
 
 	public CartItemPres() {
