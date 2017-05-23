@@ -1,5 +1,7 @@
 package presentation.data;
 
+import java.io.Serializable;
+
 /**
  * This is a stub class, containing enough data of a CartItem
  * for presentation. It is used when user wishes to add
@@ -9,7 +11,11 @@ package presentation.data;
  * @author pcorazza
  *
  */
-public class CartItemData {
+public class CartItemData implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7106188677540703838L;
 	private String itemName;
 	private int quantity;
 	private double price;

@@ -120,11 +120,11 @@ public interface CustomerSubsystem {
 	// public void checkCreditCard(CreditCard cc) throws BusinessException;
 	//
 	// //TESTING
-//	public DbClassAddressForTest getGenericDbClassAddress();
+	public DbClassAddressForTest getGenericDbClassAddress();
 
-//	public CustomerProfile getGenericCustomerProfile();
+	public CustomerProfile getGenericCustomerProfile();
 
-//	public DbClassCustomerProfileForTest getGenericDbClassCustomerProfile();
+	public DbClassCustomerProfileForTest getGenericDbClassCustomerProfile();
 
 	public void deleteAddress(int addressId) throws BackendException;
 

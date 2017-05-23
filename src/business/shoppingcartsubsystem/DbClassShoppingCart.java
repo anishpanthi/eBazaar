@@ -37,12 +37,12 @@ public class DbClassShoppingCart implements DbClass {
 	///////queries and params
 	private String getIdQuery = "SELECT shopcartid FROM ShopCartTbl WHERE custid = ?";
 	   //param is custProfile.getCustId()
-	private String saveCartQuery = "INSERT INTO shopcarttbl (custid,shipaddress1, " + 
+	private String saveCartQuery = "INSERT INTO shopcarttbl (shopcartid,custid,shipaddress1, " + 
     		"shipaddress2, shipcity, shipstate, shipzipcode, billaddress1, " + 
     		"billaddress2, billcity, billstate, billzipcode, nameoncard, " +
     		"expdate,cardtype, cardnum, totalpriceamount, totalshipmentcost, "+ 
     		"totaltaxamount, totalamountcharged) " +
-    		"VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    		"VALUES (null,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 	private String getTopLevelSavedCartQuery = "SELECT * FROM shopcarttbl WHERE shopcartid = ?";
 			//param is cartId 
 	private String getSavedItemsQuery  = "SELECT * FROM shopcartitem WHERE shopcartid = ?";
@@ -140,7 +140,7 @@ public class DbClassShoppingCart implements DbClass {
     //Precondition: shopping cart was stored as instance variable (should be done by saveCart method)
     private int saveCartTopLevel(CustomerProfile custProfile) throws DatabaseException {
     	queryType = Type.SAVE_CART;
-    	saveCartParams = new Object[]{custProfile.getCustId(), cart.getShippingAddress().getStreet(),
+    	saveCartParams = new Object[]{custProfile.getCustId(), cart.getShippingAddress().getStreet(),"","",
     	  cart.getShippingAddress().getCity(), cart.getShippingAddress().getState(), cart.getShippingAddress().getZip(),
     	  cart.getBillingAddress().getStreet(), cart.getBillingAddress().getCity(), cart.getBillingAddress().getState(),
     	  cart.getBillingAddress().getZip(), cart.getPaymentInfo().getNameOnCard(), cart.getPaymentInfo().getExpirationDate(),
@@ -148,6 +148,7 @@ public class DbClassShoppingCart implements DbClass {
     	  0.00, 0.00, cart.getTotalPrice()};
     	saveCartTypes = new int[]{Types.INTEGER, Types.VARCHAR, 
     			Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,
+    			Types.VARCHAR,Types.VARCHAR,
     			Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,
     			Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,
     			Types.VARCHAR,Types.VARCHAR,Types.DOUBLE,

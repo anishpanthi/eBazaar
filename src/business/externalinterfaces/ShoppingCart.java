@@ -14,5 +14,7 @@ public interface ShoppingCart {
     boolean isEmpty();
 
     //setters for testing
-    
+    void setBillAddress(Address billAddress);
+    void setShipAddress(Address shipAddress);
+    void setPaymentInfo(CreditCard creditCard);
 }

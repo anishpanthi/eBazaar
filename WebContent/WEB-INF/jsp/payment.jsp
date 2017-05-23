@@ -6,7 +6,7 @@
 <head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<title>Shipping And Billing Address</title>
+<title>eBazaar - Payment</title>
 <meta name="generator" content="Bootply" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -31,12 +31,8 @@
 	rel="stylesheet" type="text/css">
 </head>
 <body>
-
-
 	<div id="wrapper">
 		<jsp:include page="headernav.jsp" />
-
-
 		<!-- Page Content -->
 		<div id="page-wrapper">
 			<div class="container-fluid">
@@ -53,11 +49,9 @@
 							<div class="alert alert-danger alert-dismissable">
 								<button type="button" class="close" data-dismiss="alert"
 									aria-hidden="true">×</button>
-
 								${message}
 								</div>
 						</c:if>
-				
 						<div class="panel-body">
 							<div class="row">
 								<div class="col-lg-12">
@@ -94,8 +88,6 @@
 														<option value="Discover" selected>Discover</option>
 													</c:otherwise>
 												</c:choose>
-
-
 											</select>
 										</div>
 										<div class="form-group">

@@ -1,9 +1,15 @@
 package presentation.data;
 
-import business.externalinterfaces.*;
+import java.io.Serializable;
+
+import business.externalinterfaces.Address;
 import javafx.beans.property.SimpleStringProperty;
 
-public class AddressPres {
+public class AddressPres implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6692530778375381236L;
 	private Address address;
 	public Address getAddress() {
 		return address;

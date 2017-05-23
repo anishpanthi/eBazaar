@@ -31,7 +31,7 @@
 		
 		<sec:authorize ifAnyGranted="ADMIN, CUSTOMER">
 			<li><a href="${pageContext.servletContext.contextPath}/processLogout"><i
-					class="fa fa-sign-out fa-fw"></i>Logout</a></a></li>
+					class="fa fa-sign-out fa-fw"></i>Logout</a></li>
 		</sec:authorize>		
 
 		<!-- /.dropdown -->
@@ -56,25 +56,18 @@
 						class="fa fa-search fa-fw"></i> Browse Catalogs</a></li>
 
 				<li><a
-					href="#"><i
+					href="${pageContext.servletContext.contextPath}/customer/viewPastOrder"><i
 						class="glyphicon glyphicon-book"></i> Order History</a></li>
 				<li><a
-					href="#"><i
-						class="fa  fa-shopping-cart fa-fw"></i> Retrieve Saved Cart</a></li>
-						
-				<%-- <sec:authorize access="hasRole('ADMIN')">
-					<li><a href="#"><i
-						class="glyphicon glyphicon-tasks"></i> Maintain Catalogs</a></li>
-					<li><a href="#"><i
-						class="fa fa-table fa-fw"></i> Maintain Products</a></li>
-				</sec:authorize> --%>
+					href="${pageContext.servletContext.contextPath}/customer/retrievesavedcart"><i
+						class="fa  fa-shopping-cart fa-fw"></i> Retrieve Saved Cart</a></li>										
 				
 				<sec:authorize access="hasRole('ADMIN')">
 					<li><a href="#"><i class="glyphicon glyphicon-tasks"></i>
 							Manage<span class="fa arrow"></span></a>
 						<ul class="nav nav-second-level">
-							<li><a href="#">Products</a></li>
-							<li><a href="#">Catalogs</a></li>
+						<%--<li><a href="${pageContext.servletContext.contextPath}/listProducts">Products</a></li>--%>	
+							<li><a href="${pageContext.servletContext.contextPath}/listCatalogs">Catalogs/Products</a></li>
 						</ul> <!-- /.nav-second-level -->
 					</li>
 				</sec:authorize>

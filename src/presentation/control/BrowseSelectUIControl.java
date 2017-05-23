@@ -27,8 +27,6 @@ import presentation.data.ProductPres;
 
 @Controller
 public class BrowseSelectUIControl {
-//	@Autowired
-//	private CatalogDAO catolog;
 
 	@Autowired
 	ManageProductsData manageProductsData;

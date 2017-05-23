@@ -1,9 +1,8 @@
 
 package business.externalinterfaces;
 
-import java.io.Serializable;
 
-public interface CreditCard extends Serializable{
+public interface CreditCard {
     String getNameOnCard();
     String getExpirationDate();
     String getCardNum();

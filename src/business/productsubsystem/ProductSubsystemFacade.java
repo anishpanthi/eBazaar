@@ -73,6 +73,7 @@ public class ProductSubsystemFacade implements ProductSubsystem {
     		DbClassProduct dbclass = new DbClassProduct();
     		return dbclass.readProductList(catalog);
     	} catch(DatabaseException e) {
+    		LOG.info(e.getMessage());
     		throw new BackendException(e);
     	}
     }
@@ -82,14 +83,76 @@ public class ProductSubsystemFacade implements ProductSubsystem {
 		LOG.warning("Method readQuantityAvailable(Product product) has not been implemented");
 		return 2;
 	}
-	
+	@Override
 	public int saveNewCatalog(String catalogName) throws BackendException {
 		try {
 			DbClassCatalog dbclass = new DbClassCatalog();
 			return dbclass.saveNewCatalog(catalogName);
 		} catch(DatabaseException e) {
+			LOG.info(e.getMessage());
     		throw new BackendException(e);
     	}
 	}
+	@Override
+	public int deleteCatalog(int catId) throws BackendException {
+		try {
+			DbClassCatalog dbclass = new DbClassCatalog();
+			return dbclass.deleteCatalog(catId);
+		} catch(DatabaseException e) {
+			LOG.info(e.getMessage());
+    		throw new BackendException(e);
+    	}
+	}
+	@Override
+	public int updateCatalog(Catalog cat) throws BackendException {
+		try {
+			DbClassCatalog dbclass = new DbClassCatalog();
+			return dbclass.updateCatalog(cat);
+		} catch(DatabaseException e) {
+			LOG.info(e.getMessage());
+    		throw new BackendException(e);
+    	}
+	}
+	@Override
+	public int saveNewProduct(Product product, Catalog catalog) throws BackendException {
+		try {
+			DbClassProduct dbclass = new DbClassProduct();
+			return dbclass.saveNewProduct(product, catalog);
+		} catch(DatabaseException e) {
+			LOG.info(e.getMessage());
+    		throw new BackendException(e);
+    	}
+	}
+	@Override
+	public int deleteProduct(int productId) throws BackendException {
+		try {
+			DbClassProduct dbclass = new DbClassProduct();
+			return dbclass.deleteProduct(productId);
+		} catch(DatabaseException e) {
+			LOG.info(e.getMessage());
+    		throw new BackendException(e);
+    	}
+	}
+	@Override
+	public int updateProduct(Product product) throws BackendException {
+		// TODO Auto-generated method stub
+		try {
+			DbClassProduct dbclass = new DbClassProduct();
+			return dbclass.updateProduct(product);
+		} catch(DatabaseException e) {
+			LOG.info(e.getMessage());
+    		throw new BackendException(e);
+    	}
+	}
+	//just for testing
+	@Override
+	public DbClassCatalogForTest getGenericDbClassCatalog() {
+		return new DbClassCatalog();
+	}
+	@Override
+	public DbClassProductForTest getGenericDbClassProduct() {
+		return new DbClassProduct();
+	}
+	
 	
 }

@@ -4,24 +4,24 @@ package business.usecasecontrol;
 import java.util.List;
 import java.util.logging.Logger;
 
+import org.springframework.stereotype.Component;
+
 import middleware.exceptions.DatabaseException;
 
 import business.exceptions.BackendException;
+import business.externalinterfaces.Catalog;
 import business.externalinterfaces.Product;
 import business.externalinterfaces.ProductSubsystem;
 import business.productsubsystem.ProductSubsystemFacade;
-
-
-public enum ManageProductsController   {
-    INSTANCE;
+@Component
+public class ManageProductsController   {
+    //INSTANCE;
     private static final Logger LOG = 
     	Logger.getLogger(ManageProductsController.class.getName());
     
-    public List<Product> getProductsList(String catalog) throws BackendException {
+    public List<Product> getProductsList(Catalog catalog) throws BackendException {
     	ProductSubsystem pss = new ProductSubsystemFacade();    
-    	LOG.warning("ManageProductsController method getProductsList has not been implemented");
-    	//return pss.getProductList(catalog);
-    	return null;
+    	return pss.getProductList(catalog);
     }
     
     public int saveNewCatalog(String catName) throws BackendException {
@@ -29,10 +29,33 @@ public enum ManageProductsController   {
     	return pss.saveNewCatalog(catName);
     }
     
-    
-    public void deleteProduct() {
-    	//implement
+    public int deleteCatalog(int catId) throws BackendException {
+    	ProductSubsystem pss = new ProductSubsystemFacade(); 
+    	return pss.deleteCatalog(catId);
     }
     
+    public int updateCatalog(Catalog cat) throws BackendException {
+    	ProductSubsystem pss = new ProductSubsystemFacade(); 
+    	return pss.updateCatalog(cat);
+    }
     
+    public int saveNewProduct(Product product, Catalog catalog) throws BackendException {
+    	ProductSubsystem pss = new ProductSubsystemFacade(); 
+    	return pss.saveNewProduct(product, catalog);
+    }
+    
+    public int deleteProduct(int productId) throws BackendException {
+    	ProductSubsystem pss = new ProductSubsystemFacade(); 
+    	return pss.deleteProduct(productId);
+    }
+    
+    public int updateProduct(Product product) throws BackendException {
+    	ProductSubsystem pss = new ProductSubsystemFacade(); 
+    	return pss.updateProduct(product);
+    }
+    
+    public Product getProductById(Integer productId) throws BackendException {
+		ProductSubsystem pss = new ProductSubsystemFacade();
+		return pss.getProductFromId(productId);
+	}
 }

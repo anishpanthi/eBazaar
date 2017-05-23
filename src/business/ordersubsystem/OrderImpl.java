@@ -14,7 +14,8 @@ public class OrderImpl implements Order {
 	private List<OrderItem> orderItems;
 	private int orderId;
 	private LocalDate date;
-	
+	private double totalPrice;
+
 	public OrderImpl() {
 	}
 
@@ -33,21 +34,19 @@ public class OrderImpl implements Order {
 	public void setOrderId(int orderId) {
 		this.orderId = orderId;
 	}
-	
+
 	public double getTotalPrice() {
-		if(orderItems == null) {
-			return 0.0;
+		if (orderItems == null) {
+			return totalPrice;
 		} else {
-			 DoubleSummaryStatistics summary 
-			    = orderItems.stream().collect(
-				    Collectors.summarizingDouble(
-					   (OrderItem item) -> item.getUnitPrice() * item.getQuantity()));
-			 return summary.getSum();
+			DoubleSummaryStatistics summary = orderItems.stream().collect(
+					Collectors.summarizingDouble((OrderItem item) -> item.getUnitPrice() * item.getQuantity()));
+			return summary.getSum();
 		}
 	}
-	
+
 	public LocalDate getOrderDate() {
-		//note that LocalDates are immutable
+		// note that LocalDates are immutable
 		return date;
 	}
 
@@ -55,44 +54,42 @@ public class OrderImpl implements Order {
 		this.date = date;
 	}
 
-	
-
-	
+	private Address shipAddress;
+	private Address billAddress;
+	private CreditCard cc;
 
 	@Override
 	public Address getShipAddress() {
-		// TODO Auto-generated method stub
-		return null;
+		return shipAddress;
 	}
 
 	@Override
 	public Address getBillAddress() {
-		// TODO Auto-generated method stub
-		return null;
+		return billAddress;
 	}
 
 	@Override
 	public CreditCard getPaymentInfo() {
-		// TODO Auto-generated method stub
-		return null;
+		return cc;
 	}
 
-//	@Override
-//	public void setShipAddress(Address add) {
-//		// TODO Auto-generated method stub
-//		
-//	}
-//
-//	@Override
-//	public void setBillAddress(Address add) {
-//		// TODO Auto-generated method stub
-//		
-//	}
-//
-//	@Override
-//	public void setPaymentInfo(CreditCard cc) {
-//		// TODO Auto-generated method stub
-//		
-//	}
-//	
+	@Override
+	public void setShipAddress(Address add) {
+		this.shipAddress = add;
+	}
+
+	@Override
+	public void setBillAddress(Address add) {
+		this.billAddress = add;
+	}
+
+	@Override
+	public void setPaymentInfo(CreditCard cc) {
+		this.cc = cc;
+	}
+
+	public void setTotalPrice(double price) {
+		this.totalPrice = price;
+	}
+
 }

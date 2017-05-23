@@ -14,13 +14,16 @@ import middleware.exceptions.DatabaseException;
 import middleware.externalinterfaces.DataAccessSubsystem;
 import middleware.externalinterfaces.DbClass;
 import middleware.externalinterfaces.DbConfigKey;
+import presentation.util.Util;
+import business.exceptions.BackendException;
 import business.externalinterfaces.Catalog;
+import business.externalinterfaces.DbClassProductForTest;
 import business.externalinterfaces.Product;
 import business.util.Convert;
 import business.util.TwoKeyHashMap;
 
-class DbClassProduct implements DbClass {
-	enum Type {LOAD_PROD_TABLE, READ_PRODUCT, READ_PROD_LIST, SAVE_NEW_PROD};
+class DbClassProduct implements DbClass, DbClassProductForTest {
+	enum Type {LOAD_PROD_TABLE, READ_PRODUCT, READ_PROD_LIST, SAVE_NEW_PROD, DELETE_PRODUCT, UPDATE_PRODUCT};
 
 	private static final Logger LOG = Logger.getLogger(DbClassProduct.class
 			.getPackage().getName());
@@ -30,11 +33,16 @@ class DbClassProduct implements DbClass {
 	private String loadProdTableQuery = "SELECT * FROM product";
 	private String readProductQuery = "SELECT * FROM Product WHERE productid = ?";
 	private String readProdListQuery = "SELECT * FROM Product WHERE catalogid = ?";
-	private String saveNewProdQuery = ""; //implement
+	private String deleteProductQuery = "DELETE FROM Product WHERE productid = ?";
+	private String updateProductQuery = "UPDATE Product "
+			+ "SET productname = ?, totalquantity = ?, priceperunit = ?, mfgdate = ?, description = ? "
+			+ "WHERE productid = ?";
+	private String saveNewProdQuery = "INSERT INTO Product (catalogid, productname, totalquantity, priceperunit, mfgdate, description) "
+			+ "VALUES(?, ?, ?, ?, ?, ?)"; 
 	private Object[] loadProdTableParams, readProductParams, 
-		readProdListParams, saveNewProdParams;
-	private int[] loadProdTableTypes, readProductTypes, readProdListTypes, 
-	    saveNewProdTypes;
+		readProdListParams, saveNewProdParams, deleteProductParams, updateProductParams;
+	private int[] loadProdTableTypes, readProductTypes, readProdListTypes, updateProductTypes, 
+	    saveNewProdTypes, deleteProductTypes;
 	
 	/**
 	 * The productTable matches product ID and product name with
@@ -104,10 +112,29 @@ class DbClassProduct implements DbClass {
 	 * Database columns: productid, productname, totalquantity, priceperunit,
 	 * mfgdate, catalogid, description
 	 */
-	public void saveNewProduct(Product product, Catalog catalog) 
+	public int saveNewProduct(Product product, Catalog catalog) throws DatabaseException {
+		queryType = Type.SAVE_NEW_PROD;
+		saveNewProdParams = new Object[] { catalog.getId(), product.getProductName(), product.getQuantityAvail(),
+				product.getUnitPrice(), Util.localDateAsString(product.getMfgDate()), product.getDescription() };
+		saveNewProdTypes = new int[] { Types.INTEGER, Types.VARCHAR, Types.INTEGER, Types.DOUBLE, Types.VARCHAR,
+				Types.VARCHAR };
+		return dataAccessSS.insertWithinTransaction(this);
+	}
+	
+	public int deleteProduct(Integer productId)
 			throws DatabaseException {
-		//implement
-		LOG.warning("Method saveNewProduct in DbClassProduct has not been impemented");
+		queryType = Type.DELETE_PRODUCT;
+		deleteProductParams = new Object[] {productId};
+		deleteProductTypes = new int[] {Types.INTEGER};
+		return dataAccessSS.deleteWithinTransaction(this);
+	}
+	
+	public int updateProduct(Product product) throws DatabaseException {
+		queryType = Type.UPDATE_PRODUCT;
+		updateProductParams = new Object[] { product.getProductName(), product.getQuantityAvail(),
+				product.getUnitPrice(), Util.localDateAsString(product.getMfgDate()), product.getDescription(), product.getProductId() };
+		updateProductTypes = new int[] { Types.VARCHAR, Types.INTEGER, Types.DOUBLE, Types.VARCHAR, Types.VARCHAR, Types.INTEGER };
+		return dataAccessSS.updateWithinTransaction(this);
 	}
 	
 	/// DbClass implemented methods
@@ -128,6 +155,10 @@ class DbClassProduct implements DbClass {
 				return readProdListQuery;
 			case SAVE_NEW_PROD :
 				return saveNewProdQuery;
+			case DELETE_PRODUCT :
+				return deleteProductQuery;
+			case UPDATE_PRODUCT :
+				return updateProductQuery;
 			default:
 				return null;
 		}
@@ -144,6 +175,10 @@ class DbClassProduct implements DbClass {
 				return readProdListParams;
 			case SAVE_NEW_PROD :
 				return saveNewProdParams;
+			case DELETE_PRODUCT :
+				return deleteProductParams;
+			case UPDATE_PRODUCT :
+				return updateProductParams;
 			default:
 				return null;
 		}
@@ -160,6 +195,10 @@ class DbClassProduct implements DbClass {
 			return readProdListTypes;
 		case SAVE_NEW_PROD :
 			return saveNewProdTypes;
+		case DELETE_PRODUCT :
+			return deleteProductTypes;
+		case UPDATE_PRODUCT :
+			return updateProductTypes;
 		default:
 			return null;
 	}
@@ -259,6 +298,16 @@ class DbClassProduct implements DbClass {
 		} catch (SQLException e) {
 			throw new DatabaseException(e);
 		}
+	}
+	//just for testing
+	@Override
+	public int saveNewProductForTest(Product product, Catalog catalog) throws DatabaseException {
+		return saveNewProduct(product, catalog);
+	}
+
+	@Override
+	public int deleteProductForTest(int productId) throws DatabaseException {
+		return deleteProduct(productId);
 	}
 	
 }

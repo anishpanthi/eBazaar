@@ -80,7 +80,8 @@
 												<th><a
 													href="${pageContext.servletContext.contextPath}/customer/selectaddress/${title}/${address.id}">
 														Select </a></th>
-												<th><button type="button" class="btn btn-danger" onclick="window.location.href='${pageContext.servletContext.contextPath}/customer/deleteAddress/${title}/${address.id }'">Delete</button></th>
+												<th><button type="button" class="btn btn-danger" onclick="window.location.href='${pageContext.servletContext.contextPath}/customer/deleteAddress/${title}/${address.id }'"><span
+													class="glyphicon glyphicon-remove" /></span></button></th>
 											</tr>
 										</c:forEach>
 

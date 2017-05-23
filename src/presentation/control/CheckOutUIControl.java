@@ -14,6 +14,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import presentation.data.AddressPres;
+import presentation.data.BrowseSelectData;
+import presentation.data.CartItemPres;
+import presentation.data.CheckoutData;
+import presentation.data.CreditCardPres;
+import presentation.data.CustomerPres;
+import presentation.gui.GuiConstants;
 import business.exceptions.BackendException;
 import business.exceptions.BusinessException;
 import business.exceptions.RuleException;
@@ -22,13 +29,6 @@ import business.externalinterfaces.CreditCard;
 import business.shoppingcartsubsystem.ShoppingCartSubsystemFacade;
 import business.usecasecontrol.CheckoutController;
 import business.util.DataUtil;
-import presentation.data.AddressPres;
-import presentation.data.BrowseSelectData;
-import presentation.data.CartItemPres;
-import presentation.data.CheckoutData;
-import presentation.data.CreditCardPres;
-import presentation.data.CustomerPres;
-import presentation.gui.GuiConstants;
 
 @Controller
 @RequestMapping("/customer")

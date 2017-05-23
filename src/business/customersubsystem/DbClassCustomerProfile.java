@@ -6,6 +6,7 @@ import java.sql.Types;
 import java.util.logging.Logger;
 
 import business.externalinterfaces.CustomerProfile;
+import business.externalinterfaces.DbClassCustomerProfileForTest;
 import middleware.DbConfigProperties;
 import middleware.dataaccess.DataAccessSubsystemFacade;
 import middleware.exceptions.DatabaseException;
@@ -13,7 +14,7 @@ import middleware.externalinterfaces.DataAccessSubsystem;
 import middleware.externalinterfaces.DbClass;
 import middleware.externalinterfaces.DbConfigKey;
 
-class DbClassCustomerProfile implements DbClass{
+class DbClassCustomerProfile implements DbClass, DbClassCustomerProfileForTest{
 	enum Type {
 		READ, READ_DEFAULT_PAYMENT_INFO
 	};
@@ -124,8 +125,8 @@ class DbClassCustomerProfile implements DbClass{
 		}
 	}
 
-//	@Override
-//	public CustomerProfile getCustomerProfileForTest() {
-//		return customerProfile;
-//	}
+	@Override
+	public CustomerProfile getCustomerProfileForTest() {
+		return customerProfile;
+	}
 }

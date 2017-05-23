@@ -9,6 +9,8 @@ import business.externalinterfaces.Address;
 import business.externalinterfaces.CreditCard;
 import business.externalinterfaces.CustomerProfile;
 import business.externalinterfaces.CustomerSubsystem;
+import business.externalinterfaces.DbClassAddressForTest;
+import business.externalinterfaces.DbClassCustomerProfileForTest;
 import business.externalinterfaces.Order;
 import business.externalinterfaces.OrderSubsystem;
 import business.externalinterfaces.Rules;
@@ -235,6 +237,21 @@ public class CustomerSubsystemFacade implements CustomerSubsystem {
 			// TODO Auto-generated catch block
 			throw new BackendException(e);
 		}
+	}
+
+	@Override
+	public DbClassAddressForTest getGenericDbClassAddress() {
+		return new DbClassAddress();
+	}
+
+	@Override
+	public CustomerProfile getGenericCustomerProfile() {
+		return new CustomerProfileImpl();
+	}
+
+	@Override
+	public DbClassCustomerProfileForTest getGenericDbClassCustomerProfile() {
+		return new DbClassCustomerProfile();
 	}
 
 }

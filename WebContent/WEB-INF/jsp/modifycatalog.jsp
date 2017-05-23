@@ -6,10 +6,49 @@
 <head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<title>eBazaar - Cart</title>
+<title>eBazaar - Modify Catalog</title>
 <meta name="generator" content="Bootply" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1">
+	
+<script
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+<script
+	src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.js"></script>
+<script
+	src="http://ajax.microsoft.com/ajax/jquery.validate/1.7/additional-methods.js"></script>
+
+<script type="text/javascript">
+jQuery(function ($) {
+    $('#form').validate({
+        rules: {
+            id: {
+                required: true,
+                maxlength: 5,
+                number: true
+            },
+            name: {
+                required: true,
+                maxlength: 50,
+            },
+           
+        },
+        messages: {
+            id: {
+                required: "Please enter Catalog ID",
+                maxlength: "Catalog ID should be less than 5 characters",
+                number: "Catlog ID should contain only number"
+            },
+            name: {
+                required: "Please enter catalog name",              
+                maxlength: "Catalog Name should be less than 50 characters"
+               
+            },           
+        },
+    });
+});
+</script>	
+	
 <!-- Bootstrap Core CSS -->
 <link
 	href="${pageContext.request.contextPath}/resources/bootstrap/bower_components/bootstrap/dist/css/bootstrap.min.css"
@@ -35,52 +74,41 @@
 
 	<div id="wrapper">
 		<jsp:include page="headernav.jsp" />
+
+
 		<!-- Page Content -->
 		<div id="page-wrapper">
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-lg-12">
-						<h1 class="page-header">eBazaar - Cart Items</h1>
-
+						<h1 class="page-header">Catalog Detail: ${catalogName }</h1>
+						<form id="form" method="post" action="${pageContext.servletContext.contextPath}/modifyCatalog">
 						<div class="table-responsive">
 							<table class="table table-striped table-bordered table-hover">
-								<thead>
-									<tr>
-										<th>Item</th>
-										<th>Quantity</th>
-										<th>Unit Price</th>
-										<th>Total Price</th>
-										<th>Delete</th>
-									</tr>
-								</thead>
-
-								<c:forEach varStatus="loop" var="cartItemPres" items="${cartItems}">
-									<tr>
-										<td>${cartItemPres.itemName }</td>
-										<td>${cartItemPres.quantity }</td>
-										<td>${cartItemPres.price }</td>
-										<td>${cartItemPres.totalPrice }</td>
-										<td><a
-											href="${pageContext.servletContext.contextPath}/deleteItem/${cartItemPres.itemName}"><span
-													class="glyphicon glyphicon-remove" /></span></a></td>
-									</tr>
-								</c:forEach>
+								<tr>
+									<td><label>Catalog ID</label></td>
+									<td><input type="text" class="form-control" name="id" id="id" value ="${catalogId }" readonly></td>
+								</tr>
+								<tr>
+									<td><label>Catalog Name</label></td>
+									<td><input type="text" class="form-control" name="name" id="name" value= "${catalogName }" ></td>
+								</tr>
 							</table>
 						</div>
-						<p class="buttonRow">
-							<input type="submit" onclick="window.location.href='${pageContext.servletContext.contextPath}/customer/shippingbilling'" class="btn btn-primary" value="Proceed to Checkout"> 
-							<input type="submit" onclick="window.location.href='${pageContext.servletContext.contextPath}'" class="btn btn-primary" value="Continue Shopping">
-							<input type="submit" onclick="window.location.href='${pageContext.servletContext.contextPath}/customer/savecart'" class="btn btn-primary" value="Save Cart">
-						</p>
+
+							<input type="submit" class="btn btn-primary" value="Modify Catalog">
+							<button type="button"
+								onclick="window.location.href='${pageContext.servletContext.contextPath}/listCatalogs'"  class="btn btn-primary" name="submit">Previous Screen</button>
+						</form>
+						<div class="alert alert-success" role="alert">${successMessage }</div>
+
 					</div>
 				</div>
-
 				<!-- /.row -->
 			</div>
 			<!-- /.container-fluid -->
 		</div>
 		<!-- /#page-wrapper -->
-
 	</div>
 
 	<jsp:include page="footernav.jsp" />

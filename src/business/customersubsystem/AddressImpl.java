@@ -3,6 +3,10 @@ package business.customersubsystem;
 import business.externalinterfaces.Address;
 
 public class AddressImpl implements Address {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2211505219263068331L;
 	private String street;
 	private String city;
 	private String state;

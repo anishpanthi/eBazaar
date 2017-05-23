@@ -56,14 +56,18 @@ class ShoppingCartImpl implements ShoppingCart {
     	this.cartItems = cartItems;
     }
     
-    void setShipAddress(Address addr){
+    @Override
+    public void setShipAddress(Address addr){
         shipAddress = addr;
     }
-    void setBillAddress(Address addr){
+    
+    @Override
+    public void setBillAddress(Address addr){
         billAddress = addr;
     }
     
-    void setPaymentInfo(CreditCard cc) {
+    @Override
+    public void setPaymentInfo(CreditCard cc) {
         creditCard = cc;
     }
 

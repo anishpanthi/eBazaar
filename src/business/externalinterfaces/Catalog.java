@@ -1,8 +1,6 @@
 package business.externalinterfaces;
 
-import java.io.Serializable;
-
-public interface Catalog extends Serializable{
+public interface Catalog {
 	int getId();
 	String getName();
 	void setId(int id);

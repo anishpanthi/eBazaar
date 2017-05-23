@@ -6,7 +6,7 @@
 <head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<title>eBazaar - Cart</title>
+<title>View Order</title>
 <meta name="generator" content="Bootply" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -35,47 +35,59 @@
 
 	<div id="wrapper">
 		<jsp:include page="headernav.jsp" />
+
+
 		<!-- Page Content -->
 		<div id="page-wrapper">
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-lg-12">
-						<h1 class="page-header">eBazaar - Cart Items</h1>
-
-						<div class="table-responsive">
-							<table class="table table-striped table-bordered table-hover">
-								<thead>
-									<tr>
-										<th>Item</th>
-										<th>Quantity</th>
-										<th>Unit Price</th>
-										<th>Total Price</th>
-										<th>Delete</th>
-									</tr>
-								</thead>
-
-								<c:forEach varStatus="loop" var="cartItemPres" items="${cartItems}">
-									<tr>
-										<td>${cartItemPres.itemName }</td>
-										<td>${cartItemPres.quantity }</td>
-										<td>${cartItemPres.price }</td>
-										<td>${cartItemPres.totalPrice }</td>
-										<td><a
-											href="${pageContext.servletContext.contextPath}/deleteItem/${cartItemPres.itemName}"><span
-													class="glyphicon glyphicon-remove" /></span></a></td>
-									</tr>
-								</c:forEach>
-							</table>
-						</div>
-						<p class="buttonRow">
-							<input type="submit" onclick="window.location.href='${pageContext.servletContext.contextPath}/customer/shippingbilling'" class="btn btn-primary" value="Proceed to Checkout"> 
-							<input type="submit" onclick="window.location.href='${pageContext.servletContext.contextPath}'" class="btn btn-primary" value="Continue Shopping">
-							<input type="submit" onclick="window.location.href='${pageContext.servletContext.contextPath}/customer/savecart'" class="btn btn-primary" value="Save Cart">
-						</p>
+						<h1 class="page-header">View Order</h1>
 					</div>
+					<!-- /.col-lg-12 -->
 				</div>
+				<div class="col-lg-12">
+					<div class="panel panel-primary">
+						<div class="panel-heading">Please Review Your Final Order</div>
+						<!-- /.panel-heading -->
+						<div class="panel-body">
+							<div class="table-responsive">
+								<table class="table">
+									<thead>
+										<tr>
+											<th>#</th>
+											<th>Order ID</th>
+											<th>Date Of Order</th>
+											<th>Total Price</th>
+											<th>Action</th>
+										</tr>
+									</thead>
+									<tbody>
+										<c:forEach varStatus="loop" var="order"
+											items="${orders}">
+											<tr class="odd gradeX">
+												<td>${loop.index+1}</td>
+												<td>${order.getOrderId()}</td>
+												<td>${order.dateProperty().value}</td>
+												<td>${order.totalPriceProperty().value}</td>
+												<td><a
+													href="${pageContext.servletContext.contextPath}/customer/orderdetail/${order.getOrderId()}"><span
+														class="buttonNormal"> View Details</span></a></td>
+											</tr>
+										</c:forEach>
 
-				<!-- /.row -->
+									</tbody>
+								</table>
+							</div>
+							<!-- /.table-responsive -->
+						</div>
+						<!-- /.panel-body -->
+						<div class="panel-footer">
+						
+						</div>
+					</div>
+					<!-- /.panel -->
+				</div>
 			</div>
 			<!-- /.container-fluid -->
 		</div>

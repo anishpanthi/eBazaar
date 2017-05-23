@@ -29,6 +29,21 @@ public interface ProductSubsystem {
 //
 	/** saves newly created catalog */
 	public int saveNewCatalog(String catName) throws BackendException;
+	
+	/** updates catalog */
+	public int updateCatalog(Catalog cat) throws BackendException;
+	
+	/** deletes a catalog */
+	public int deleteCatalog(int catId) throws BackendException;
+	
+	/** saves newly created product */
+	public int saveNewProduct(Product product, Catalog catalog) throws BackendException;
+	
+	/** updates product */
+	public int updateProduct(Product product) throws BackendException;
+	
+	/** deletes a product */
+	public int deleteProduct(int productId) throws BackendException;
 //
 //	/** saves a new product obtained from user input */
 //	public void saveNewProduct(Product product) throws BackendException;
@@ -40,5 +55,10 @@ public interface ProductSubsystem {
 //	public void deleteCatalog(Catalog catalog) throws BackendException;
 
 	public Catalog getCatalogFromName(String catName) throws BackendException;
+
+	// Just for testing 
+	public DbClassCatalogForTest getGenericDbClassCatalog();
+
+	public DbClassProductForTest getGenericDbClassProduct();
 
 }

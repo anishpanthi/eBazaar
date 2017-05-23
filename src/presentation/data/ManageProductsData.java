@@ -14,6 +14,7 @@ import business.externalinterfaces.Product;
 import business.externalinterfaces.ProductSubsystem;
 import business.productsubsystem.ProductSubsystemFacade;
 import business.usecasecontrol.BrowseAndSelectController;
+import business.usecasecontrol.ManageProductsController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
@@ -25,6 +26,9 @@ public class ManageProductsData {
 	
 	@Autowired
 	BrowseAndSelectController browseAndSelectController;
+	
+	@Autowired
+	ManageProductsController manageProductsController;
 	
 	private CatalogPres defaultCatalog = readDefaultCatalogFromDataSource();
 	private CatalogPres readDefaultCatalogFromDataSource() {
@@ -111,6 +115,17 @@ public class ManageProductsData {
 		//keep productsMap updated
 		productsMap.put(catPres, list);
 		return FXCollections.observableList(productsMap.get(catPres));
+	}
+	
+	public ObservableList<ProductPres> getProductsListPres(CatalogPres selectedCatalog) throws BackendException {
+		List<ProductPres> list =
+				browseAndSelectController.getProducts(selectedCatalog.getCatalog())
+			    .stream()
+			    .map(prod -> Util.productToProductPres(prod))
+			    .collect(Collectors.toList());
+		//keep productsMap updated
+		productsMap.put(selectedCatalog, list);
+		return FXCollections.observableList(productsMap.get(selectedCatalog));
 	}
 	
 	public ProductPres productPresFromData(Catalog c, String name, String date,  //MM/dd/yyyy 
@@ -239,7 +254,38 @@ public class ManageProductsData {
 			catalogList = list;
 		}
 	}
+	
 	public ManageCatalogsSynchronizer getManageCatalogsSynchronizer() {
 		return new ManageCatalogsSynchronizer();
+	}
+	
+	public List<Product> getProductsLists(CatalogPres catPres) throws BackendException {
+		List<Product> list = manageProductsController.getProductsList(catPres.getCatalog());
+		return list;
+	}
+	
+	public int saveNewCatalog(String catName) throws BackendException {
+		return manageProductsController.saveNewCatalog(catName);
+	}
+	
+	public int deleteCatalog(int catId) throws BackendException {
+		return manageProductsController.deleteCatalog(catId);
+	}
+	
+	public int updateCatalog(int catId, String catName) throws BackendException {
+		Catalog catalog = ProductSubsystemFacade.createCatalog(catId, catName);
+		return manageProductsController.updateCatalog(catalog);
+	}
+	
+	public int saveNewProduct(Product product, Catalog catalog) throws BackendException {
+		return manageProductsController.saveNewProduct(product, catalog);
+	}
+	
+	public int deleteProduct(int productId) throws BackendException {
+		return manageProductsController.deleteProduct(productId);
+	}
+	
+	public int updateProduct(Product product) throws BackendException {
+		return manageProductsController.updateProduct(product);
 	}
 }
