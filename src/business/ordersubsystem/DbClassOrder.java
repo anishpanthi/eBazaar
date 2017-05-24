@@ -15,6 +15,7 @@ import presentation.util.Util;
 import business.externalinterfaces.Address;
 import business.externalinterfaces.CreditCard;
 import business.externalinterfaces.CustomerProfile;
+import business.externalinterfaces.DbClassOrderForTest;
 import business.externalinterfaces.Order;
 import business.externalinterfaces.OrderItem;
 import business.util.Convert;
@@ -25,7 +26,7 @@ import middleware.externalinterfaces.DataAccessSubsystem;
 import middleware.externalinterfaces.DbClass;
 import middleware.externalinterfaces.DbConfigKey;
 
-class DbClassOrder implements DbClass {
+class DbClassOrder implements DbClass, DbClassOrderForTest {
 
 	enum Type {
 		GET_ORDER_ITEMS, GET_ORDER_IDS, GET_ORDER_DATA, SUBMIT_ORDER, SUBMIT_ORDER_ITEM
@@ -87,7 +88,7 @@ class DbClassOrder implements DbClass {
 	 * is done within a transaction. Separate methods are provided
 	 */
 	void submitOrder(CustomerProfile custProfile, Order order) throws DatabaseException {
-		LOG.warning("Method submitOrder(CustomerProfile custProfile, Order order) has not beenimplemented");
+//		LOG.warning("Method submitOrder(CustomerProfile custProfile, Order order) has not beenimplemented");
 		// implement
 		this.custProfile = custProfile;
 		this.order = order;
@@ -257,6 +258,11 @@ class DbClassOrder implements DbClass {
 		default:
 			return null;
 		}
+	}
+
+	@Override
+	public List<Integer> readOrderHistoryForTest(CustomerProfile customer) throws DatabaseException {
+		return getAllOrderIds(customer);
 	}
 
 }

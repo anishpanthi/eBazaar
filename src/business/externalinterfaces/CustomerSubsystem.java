@@ -117,7 +117,7 @@ public interface CustomerSubsystem {
 	// /**
 	// * Checks validity of credit card against the Credit Verification system
 	// */
-	// public void checkCreditCard(CreditCard cc) throws BusinessException;
+	public void checkCreditCard() throws BusinessException;
 	//
 	// //TESTING
 	public DbClassAddressForTest getGenericDbClassAddress();

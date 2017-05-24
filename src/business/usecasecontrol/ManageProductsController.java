@@ -58,4 +58,9 @@ public class ManageProductsController   {
 		ProductSubsystem pss = new ProductSubsystemFacade();
 		return pss.getProductFromId(productId);
 	}
+    
+    public List<Catalog> getCatalogList() throws BackendException {
+		ProductSubsystem pss = new ProductSubsystemFacade();
+		return pss.getCatalogList();
+	}
 }

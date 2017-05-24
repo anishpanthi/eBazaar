@@ -288,4 +288,12 @@ public class ManageProductsData {
 	public int updateProduct(Product product) throws BackendException {
 		return manageProductsController.updateProduct(product);
 	}
+	
+	public List<CatalogPres> getCatalogLists() throws BackendException {
+		List<CatalogPres> list = manageProductsController.getCatalogList()
+			    .stream()
+			    .map(catalog -> Util.catalogToCatalogPres(catalog))
+			    .collect(Collectors.toList());
+		return FXCollections.observableList(list);
+	}
 }

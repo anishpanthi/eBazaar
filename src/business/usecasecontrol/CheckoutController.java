@@ -27,6 +27,8 @@ public class CheckoutController {
 	//INSTANCE;
 
 	private static final Logger LOG = Logger.getLogger(CheckoutController.class.getPackage().getName());
+	
+	CustomerSubsystem cust = DataUtil.readCustFromCache();
 
 	public void runShoppingCartRules(List<CartItemPres> cartItems) throws RuleException, BusinessException {
 		ShoppingCartSubsystemFacade.INSTANCE.runShippingRules(ShoppingCartSubsystemFacade
@@ -76,6 +78,10 @@ public class CheckoutController {
 	 */
 	public void verifyCreditCard() throws BusinessException {
 		// implement
+		CustomerSubsystem temp = DataUtil.readCustFromCache();
+		if(temp != null && temp != cust) 
+			cust = temp;
+		cust.checkCreditCard();
 	}
 
 	public void saveNewAddress(Address addr) throws BackendException {

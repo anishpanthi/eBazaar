@@ -30,7 +30,7 @@ public class ManageProductsUIControl {
 		LOG.info("******** get List of Catalogs ***********");
 		List<CatalogPres> catalogs = null;
 		try {
-			catalogs = manageProductsData.getCatalogList();
+			catalogs = manageProductsData.getCatalogLists();
 		} catch (BackendException e) {
 			e.printStackTrace();
 			LOG.info(e.getMessage());

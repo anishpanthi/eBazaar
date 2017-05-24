@@ -4,11 +4,18 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.logging.Logger;
 
-import middleware.exceptions.DatabaseException;
-import business.exceptions.BackendException;
-import business.externalinterfaces.*;
-import business.util.TwoKeyHashMap;
+import org.springframework.stereotype.Component;
 
+import business.exceptions.BackendException;
+import business.externalinterfaces.Catalog;
+import business.externalinterfaces.DbClassCatalogForTest;
+import business.externalinterfaces.DbClassProductForTest;
+import business.externalinterfaces.Product;
+import business.externalinterfaces.ProductSubsystem;
+import business.util.TwoKeyHashMap;
+import middleware.exceptions.DatabaseException;
+
+@Component
 public class ProductSubsystemFacade implements ProductSubsystem {
 	private static final Logger LOG = 
 			Logger.getLogger(ProductSubsystemFacade.class.getPackage().getName());
@@ -80,8 +87,14 @@ public class ProductSubsystemFacade implements ProductSubsystem {
 	
 	public int readQuantityAvailable(Product product) {
 		//IMPLEMENT
-		LOG.warning("Method readQuantityAvailable(Product product) has not been implemented");
-		return 2;
+		try{
+			DbClassProduct dbclass = new DbClassProduct();
+			Product p = dbclass.readProduct(product.getProductId());
+			return p.getQuantityAvail();
+		}catch(DatabaseException e){
+			//throw new BackendException(e);
+		}
+		return 0;
 	}
 	@Override
 	public int saveNewCatalog(String catalogName) throws BackendException {

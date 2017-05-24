@@ -6,6 +6,7 @@ import business.exceptions.BackendException;
 import business.exceptions.BusinessException;
 import business.exceptions.RuleException;
 import business.externalinterfaces.Address;
+import business.externalinterfaces.CartItem;
 import business.externalinterfaces.CreditCard;
 import business.externalinterfaces.CustomerProfile;
 import business.externalinterfaces.CustomerSubsystem;
@@ -18,7 +19,12 @@ import business.externalinterfaces.ShoppingCart;
 import business.externalinterfaces.ShoppingCartSubsystem;
 import business.ordersubsystem.OrderSubsystemFacade;
 import business.shoppingcartsubsystem.ShoppingCartSubsystemFacade;
+import business.util.DataUtil;
+import middleware.creditverifcation.CreditVerificationFacade;
 import middleware.exceptions.DatabaseException;
+import middleware.exceptions.MiddlewareException;
+import middleware.externalinterfaces.CreditVerification;
+import middleware.externalinterfaces.CreditVerificationProfile;
 
 public class CustomerSubsystemFacade implements CustomerSubsystem {
 	ShoppingCartSubsystem shoppingCartSubsystem;
@@ -252,6 +258,33 @@ public class CustomerSubsystemFacade implements CustomerSubsystem {
 	@Override
 	public DbClassCustomerProfileForTest getGenericDbClassCustomerProfile() {
 		return new DbClassCustomerProfile();
+	}
+	
+	@Override
+	public void checkCreditCard() throws BusinessException {
+		List<CartItem> items = ShoppingCartSubsystemFacade.INSTANCE
+				.getCartItems();
+		ShoppingCart theCart = ShoppingCartSubsystemFacade.INSTANCE
+				.getLiveCart();
+		Address billAddr = theCart.getBillingAddress();
+		CreditCard cc = theCart.getPaymentInfo();
+		double amount = DataUtil.computeTotal(items);
+		CreditVerification creditVerif = new CreditVerificationFacade();
+		try {
+			CreditVerificationProfile profile = CreditVerificationFacade.getCreditProfileShell();
+			profile.setFirstName(customerProfile.getFirstName());
+			profile.setLastName(customerProfile.getLastName());
+			profile.setAmount(amount);
+			profile.setStreet(billAddr.getStreet());
+			profile.setCity(billAddr.getCity());
+			profile.setState(billAddr.getState());
+			profile.setZip(billAddr.getZip());
+			profile.setCardNum(cc.getCardNum());
+			profile.setExpirationDate(cc.getExpirationDate());
+			creditVerif.checkCreditCard(profile);
+		} catch (MiddlewareException e) {
+			throw new BusinessException(e);
+		}
 	}
 
 }

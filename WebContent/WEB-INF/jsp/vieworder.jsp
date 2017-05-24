@@ -67,11 +67,11 @@
 											items="${orders}">
 											<tr class="odd gradeX">
 												<td>${loop.index+1}</td>
-												<td>${order.getOrderId()}</td>
+												<td>${order.orderIdProperty().value}</td>
 												<td>${order.dateProperty().value}</td>
 												<td>${order.totalPriceProperty().value}</td>
 												<td><a
-													href="${pageContext.servletContext.contextPath}/customer/orderdetail/${order.getOrderId()}"><span
+													href="${pageContext.servletContext.contextPath}/customer/orderdetail/${order.orderIdProperty().value}"><span
 														class="buttonNormal"> View Details</span></a></td>
 											</tr>
 										</c:forEach>

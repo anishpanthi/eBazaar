@@ -3,6 +3,7 @@ package business.usecasecontrol;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import business.RulesQuantity;
@@ -24,6 +25,9 @@ import business.util.DataUtil;
 @Component
 public class BrowseAndSelectController {
 	//INSTANCE;
+	
+	@Autowired
+	ProductSubsystem productSubsystem;
 	
 	public void updateShoppingCartItems(List<CartItem> cartitems) {
 		ShoppingCartSubsystemFacade.INSTANCE.updateShoppingCartItems(cartitems);
@@ -55,17 +59,17 @@ public class BrowseAndSelectController {
 	}
 	
 	public List<Catalog> getCatalogs() throws BackendException {
-		ProductSubsystem pss = new ProductSubsystemFacade();
-		return pss.getCatalogList();
+//		ProductSubsystem pss = new ProductSubsystemFacade();
+		return productSubsystem.getCatalogList();
 	}
 	
 	public List<Product> getProducts(Catalog catalog) throws BackendException {
-		ProductSubsystem pss = new ProductSubsystemFacade();
-		return pss.getProductList(catalog);
+//		ProductSubsystem pss = new ProductSubsystemFacade();
+		return productSubsystem.getProductList(catalog);
 	}
 	public Product getProductForProductName(String name) throws BackendException {
-		ProductSubsystem pss = new ProductSubsystemFacade();
-		return pss.getProductFromName(name);
+//		ProductSubsystem pss = new ProductSubsystemFacade();
+		return productSubsystem.getProductFromName(name);
 	}
 	
 	/** Assume customer is logged in */

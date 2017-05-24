@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import business.exceptions.BackendException;
 import business.externalinterfaces.CustomerProfile;
+import business.externalinterfaces.DbClassOrderForTest;
 import business.externalinterfaces.Order;
 import business.externalinterfaces.OrderItem;
 import business.externalinterfaces.OrderSubsystem;
@@ -138,4 +139,9 @@ public class OrderSubsystemFacade implements OrderSubsystem {
 		DbClassOrder dbClass = new DbClassOrder();
 		return dbClass.getOrderData(orderId);
 	}
+	
+    @Override
+    public DbClassOrderForTest getGenericDbClassOrder() {
+        return new DbClassOrder();
+    }
 }
